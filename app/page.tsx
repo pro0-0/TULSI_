@@ -5,7 +5,8 @@ import { InfiniteMovingCards } from "@/components/infinite-moving-cards";
 import { SwipeCarousel } from "@/components/SwipeCarousel";
 import Aboutus from "@/components/Aboutus";
 import Products from "@/components/Products";
-
+import HoverDevCards from "@/components/howercard";
+import Footer from "@/components/footer_page";
 export default function Home() {
   return (
     <div className="w-full items-center justify-center">
@@ -24,6 +25,8 @@ export default function Home() {
       <SwipeCarousel />
       <Aboutus />
       <Products />
+      <HoverDevCards />
+      <Footer />
     </div>
   );
 }
