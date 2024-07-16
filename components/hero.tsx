@@ -81,7 +81,7 @@ const Hero = () => {
                   <Dialog>
                     <DialogTrigger asChild>
                       <Button
-                        size={"md"}
+                        size={"sm"}
                         variant={"outline"}
                         className=" inline-flex justify-center hover:text-gray-900 items-center py-3 px-5 text-base font-medium text-center text-black rounded-lg border border-black hover:bg-gray-100 "
                       >
