@@ -4,6 +4,8 @@ import Hero from "../components/hero";
 import { InfiniteMovingCards } from "@/components/infinite-moving-cards";
 import { SwipeCarousel } from "@/components/SwipeCarousel";
 import Aboutus from "@/components/Aboutus";
+import Products from "@/components/Products";
+
 export default function Home() {
   return (
     <div className="w-full items-center justify-center">
@@ -21,6 +23,7 @@ export default function Home() {
       /> */}
       <SwipeCarousel />
       <Aboutus />
+      <Products />
     </div>
   );
 }
