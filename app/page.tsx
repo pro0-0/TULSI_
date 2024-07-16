@@ -3,7 +3,7 @@ import Image from "next/image";
 import Hero from "../components/hero";
 import { InfiniteMovingCards } from "@/components/infinite-moving-cards";
 import { SwipeCarousel } from "@/components/SwipeCarousel";
-
+import Aboutus from "@/components/Aboutus";
 export default function Home() {
   return (
     <div className="w-full items-center justify-center">
@@ -20,6 +20,7 @@ export default function Home() {
         className="additional-css-class"
       /> */}
       <SwipeCarousel />
+      <Aboutus />
     </div>
   );
 }
