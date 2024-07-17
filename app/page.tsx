@@ -7,6 +7,8 @@ import Aboutus from "@/components/Aboutus";
 import Products from "@/components/Products";
 import HoverDevCards from "@/components/howercard";
 import Footer from "@/components/footer_page";
+import Testimonial from "@/components/testimonial";
+
 export default function Home() {
   return (
     <div className="w-full items-center justify-center">
@@ -25,6 +27,7 @@ export default function Home() {
       <SwipeCarousel />
       <Aboutus />
       <Products />
+      <Testimonial />
       <HoverDevCards />
       <Footer />
     </div>
