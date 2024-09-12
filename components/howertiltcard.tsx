@@ -7,7 +7,7 @@ import {
   useMotionValue,
   useSpring,
 } from "framer-motion";
-import { FiMousePointer } from "react-icons/fi";
+import Link from "next/link";
 
 const Example = ({ title, img }) => {
   return (
@@ -32,7 +32,7 @@ const TiltCard = ({ title, img }) => {
   const transform = useMotionTemplate`rotateX(${xSpring}deg) rotateY(${ySpring}deg)`;
 
   const handleMouseMove = (e) => {
-    if (!ref.current) return [0, 0];
+    if (!ref.current) return;
 
     const rect = ref.current.getBoundingClientRect();
 
@@ -55,50 +55,50 @@ const TiltCard = ({ title, img }) => {
   };
 
   return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        transformStyle: "preserve-3d",
-        transform,
-      }}
-      // className="relative h-96 w-72 rounded-xl bg-gradient-to-br from-indigo-300 to-violet-300"
-      className="relative h-[35vh] w-[45vw] md:h-80 md:w-80 lg:h-96 lg:w-72 rounded-xl bg-slate-100 "
-    >
-      <div
+    <Link href={`/products/${encodeURIComponent(title)}`}>
+      <motion.div
+        ref={ref}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
         style={{
-          transform: "translateZ(75px)",
           transformStyle: "preserve-3d",
+          transform,
         }}
-        className="absolute inset-4 grid place-content-center rounded-xl bg-white shadow-lg"
+        className="relative h-[35vh] w-[80vw] sm:w-[90vw] md:h-80 md:w-80 lg:h-96 lg:w-72 rounded-xl bg-gray-800"
       >
-        {/* <FiMousePointer
+        <div
           style={{
             transform: "translateZ(75px)",
+            transformStyle: "preserve-3d",
           }}
-          className="mx-auto text-4xl"
-        /> */}
-        <img
-          src={img}
-          alt={title}
-          className="absolute inset-0 h-full w-full object-cover rounded-xl"
-        />
-        <p
-          style={{
-            transform: "translateZ(50px)",
-            position: "absolute",
-            bottom: "0",
-            left: "0",
-            marginBottom: "10px",
-            marginLeft: "10px",
-          }}
-          className="text-center text-2xl font-bold bg-slate-100 rounded-md p-1  bg-clip-padding backdrop-filter  backdrop-blur-sm bg-opacity-50"
+          className="absolute inset-4 grid place-content-center rounded-xl bg-white shadow-lg"
         >
-          {title}
-        </p>
-      </div>
-    </motion.div>
+          <img
+            src={img}
+            alt={title}
+            className="absolute inset-0 h-full w-full object-cover rounded-xl"
+          />
+          <p
+            style={{
+              transform: "translateZ(50px)",
+              position: "absolute",
+              bottom: "0",
+              left: "0",
+              width: "100%",
+              backgroundColor: "rgba(31, 41, 55, 0.8)", // Dark background with some opacity
+              padding: "10px",
+              boxSizing: "border-box",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            className="text-center text-xl font-bold bg-gray-800 text-white rounded-t-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60"
+          >
+            {title}
+          </p>
+        </div>
+      </motion.div>
+    </Link>
   );
 };
 

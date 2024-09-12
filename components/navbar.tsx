@@ -19,7 +19,13 @@ const logoStyle = {
   transition: "all 0.3s ease",
   marginTop: "18px",
 };
-
+const scrollToTop = (event: any) => {
+  event.preventDefault();
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
 interface NavbarProps {
   mode: PaletteMode;
 }
@@ -86,7 +92,9 @@ function Navbar({ mode }: NavbarProps) {
                 px: 0,
               }}
             >
-              <img src="logo.png" style={logoStyle} alt="logo of sitemark" />
+              <a href="#" onClick={scrollToTop}>
+                <img src="logo.png" style={logoStyle} alt="logo of sitemark" />
+              </a>
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
                 <MenuItem
                   onClick={() => scrollToSection("highlights")}
