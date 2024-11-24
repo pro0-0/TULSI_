@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import React, { useRef } from "react";
 import {
@@ -9,19 +8,24 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 
-const Example = ({ title, img }) => {
+const Example = ({ title, img }: { title: string; img: string }) => {
   return (
-    <div className="m-2">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+    >
       <TiltCard title={title} img={img} />
-    </div>
+    </motion.div>
   );
 };
 
-const ROTATION_RANGE = 32.5;
-const HALF_ROTATION_RANGE = 32.5 / 2;
+const ROTATION_RANGE = 25;
+const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
 
-const TiltCard = ({ title, img }) => {
-  const ref = useRef(null);
+const TiltCard = ({ title, img }: { title: string; img: string }) => {
+  const ref = useRef<HTMLDivElement>(null);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -31,11 +35,10 @@ const TiltCard = ({ title, img }) => {
 
   const transform = useMotionTemplate`rotateX(${xSpring}deg) rotateY(${ySpring}deg)`;
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: React.MouseEvent) => {
     if (!ref.current) return;
 
     const rect = ref.current.getBoundingClientRect();
-
     const width = rect.width;
     const height = rect.height;
 
@@ -64,38 +67,42 @@ const TiltCard = ({ title, img }) => {
           transformStyle: "preserve-3d",
           transform,
         }}
-        className="relative h-[35vh] w-[80vw] sm:w-[90vw] md:h-80 md:w-80 lg:h-96 lg:w-72 rounded-xl bg-gray-800"
+        whileHover={{ scale: 1.02 }}
+        className="relative h-[400px] w-full rounded-2xl bg-gradient-to-b from-blue-500/20 to-blue-600/20 p-px group"
       >
         <div
           style={{
             transform: "translateZ(75px)",
             transformStyle: "preserve-3d",
           }}
-          className="absolute inset-4 grid place-content-center rounded-xl bg-white shadow-lg"
+          className="relative h-full rounded-2xl bg-gray-800 overflow-hidden"
         >
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60 z-10" />
+
+          {/* Image */}
           <img
             src={img}
             alt={title}
-            className="absolute inset-0 h-full w-full object-cover rounded-xl"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
-          <p
-            style={{
-              transform: "translateZ(50px)",
-              position: "absolute",
-              bottom: "0",
-              left: "0",
-              width: "100%",
-              backgroundColor: "rgba(31, 41, 55, 0.8)", // Dark background with some opacity
-              padding: "10px",
-              boxSizing: "border-box",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-            className="text-center text-xl font-bold bg-gray-800 text-white rounded-t-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60"
-          >
-            {title}
-          </p>
+
+          {/* Content */}
+          <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
+            <div
+              style={{
+                transform: "translateZ(50px)",
+              }}
+              className="space-y-3"
+            >
+              <h3 className="text-2xl font-bold text-white">{title}</h3>
+              <div className="flex items-center space-x-3">
+                <span className="px-3 py-1 text-sm text-blue-300 bg-blue-900/30 rounded-full backdrop-blur-sm">
+                  View Details
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </motion.div>
     </Link>

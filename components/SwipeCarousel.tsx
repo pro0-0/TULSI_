@@ -1,12 +1,30 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { motion, useMotionValue } from "framer-motion";
+import { motion, useMotionValue, AnimatePresence } from "framer-motion";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
-const imgs = ["./images1.jpg", "./images2.jpg", "./images3.jpg"];
+const imgs = [
+  {
+    src: "./images1.jpg",
+    title: "Modern Aluminum Solutions",
+    description:
+      "Premium quality aluminum products for your architectural needs",
+  },
+  {
+    src: "./images2.jpg",
+    title: "Elegant Glass Works",
+    description: "Sophisticated glass installations for modern spaces",
+  },
+  {
+    src: "./images3.jpg",
+    title: "Professional Installations",
+    description: "Expert installation services with attention to detail",
+  },
+];
 
 const ONE_SECOND = 1000;
-const AUTO_DELAY = ONE_SECOND * 3;
+const AUTO_DELAY = ONE_SECOND * 5;
 const DRAG_BUFFER = 50;
 
 const SPRING_OPTIONS = {
@@ -25,14 +43,9 @@ export const SwipeCarousel = () => {
       const x = dragX.get();
 
       if (x === 0) {
-        setImgIndex((pv) => {
-          if (pv === imgs.length - 1) {
-            return 0;
-          }
-          return pv + 1;
-        });
+        setImgIndex((pv) => (pv === imgs.length - 1 ? 0 : pv + 1));
       }
-    }, AUTO_DELAY); // Change image every 3 seconds
+    }, AUTO_DELAY);
 
     return () => clearInterval(intervalRef);
   }, [dragX]);
@@ -47,103 +60,139 @@ export const SwipeCarousel = () => {
     }
   };
 
+  const skipToImage = (index: number) => {
+    setImgIndex(index);
+  };
+
   return (
-    <div>
-      <div className="min-w-screen min-h-screen bg-gray-900 flex items-center justify-center py-5 pb-0">
-        <div className="w-full bg-white border-t border-b rounded-md border-gray-200 px-5 py-16 md:py-24 text-gray-800">
-          <div
-            className="relative overflow-hidden bg-white py-8 "
-            id="highlights"
-          >
-            <div className="absolute top-0 left-5 z-10 right-0 text-4xl sm:text-7xl">
-              <p className="bg-gray-100 w-[68vw] sm:w-[67vh] text-center rounded-lg bg-clip-padding backdrop-filter border border-gray-100 backdrop-blur-sm bg-opacity-40 p-3 sm:p-5">
-                HIGHLIGHTS
-              </p>
-            </div>{" "}
-            {/* Further reduced the height */}
-            <motion.div
-              drag="x"
-              dragConstraints={{
-                left: 0,
-                right: 0,
-              }}
-              style={{
-                x: dragX,
-              }}
-              animate={{
-                translateX: `-${imgIndex * 100}%`,
-              }}
-              transition={SPRING_OPTIONS}
-              onDragEnd={onDragEnd}
-              className="flex cursor-grab items-center active:cursor-grabbing"
-            >
-              <Images imgIndex={imgIndex} />
-            </motion.div>
-            <Dots imgIndex={imgIndex} setImgIndex={setImgIndex} />
-          </div>
-        </div>
+    <div className="relative min-h-screen bg-gray-900">
+      {/* Background Elements */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 -left-1/4 w-1/2 h-1/2 bg-gradient-to-br from-blue-600/30 to-transparent rounded-full blur-3xl" />
+        <div className="absolute bottom-0 -right-1/4 w-1/2 h-1/2 bg-gradient-to-tl from-blue-600/30 to-transparent rounded-full blur-3xl" />
       </div>
-      {/* <GradientEdges /> */}
-    </div>
-  );
-};
 
-type ImagesProps = {
-  imgIndex: number;
-};
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        {/* Header Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-base font-semibold text-blue-400 tracking-wide uppercase">
+            Our Highlights
+          </h2>
+          <p className="mt-2 text-4xl font-bold text-white lg:text-5xl">
+            Featured Projects
+          </p>
+          <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
+            Discover our exceptional work and commitment to quality
+          </p>
+        </motion.div>
 
-const Images = ({ imgIndex }: ImagesProps) => {
-  return (
-    <>
-      {imgs.map((imgSrc, idx) => {
-        return (
+        {/* Carousel Section */}
+        <div className="relative overflow-hidden rounded-2xl">
           <motion.div
-            key={idx}
+            drag="x"
+            dragConstraints={{
+              left: 0,
+              right: 0,
+            }}
             style={{
-              backgroundImage: `url(${imgSrc})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+              x: dragX,
             }}
             animate={{
-              scale: imgIndex === idx ? 0.95 : 0.85,
+              translateX: `-${imgIndex * 100}%`,
             }}
             transition={SPRING_OPTIONS}
-            className="aspect-video w-screen shrink-0 rounded-xl bg-neutral-800 object-cover  h-[400px] sm:h-[200px] lg:h-[600px]"
-          />
-        );
-      })}
-    </>
-  );
-};
+            onDragEnd={onDragEnd}
+            className="flex cursor-grab active:cursor-grabbing"
+          >
+            <AnimatePresence>
+              {imgs.map((img, idx) => (
+                <motion.div
+                  key={idx}
+                  className="relative min-w-full"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <div className="relative aspect-[16/9] overflow-hidden rounded-2xl">
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent z-10" />
 
-type DotsProps = {
-  imgIndex: number;
-  setImgIndex: React.Dispatch<React.SetStateAction<number>>;
-};
+                    <motion.img
+                      src={img.src}
+                      alt={img.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      style={{
+                        scale: imgIndex === idx ? 1 : 0.9,
+                      }}
+                      transition={SPRING_OPTIONS}
+                    />
 
-const Dots = ({ imgIndex, setImgIndex }: DotsProps) => {
-  return (
-    <div className="mt-4 flex w-full justify-center gap-2">
-      {imgs.map((_, idx) => {
-        return (
-          <button
-            key={idx}
-            onClick={() => setImgIndex(idx)}
-            className={`h-3 w-3 rounded-full transition-colors ${
-              idx === imgIndex ? "bg-neutral-900" : "bg-neutral-500"
-            }`}
-          />
-        );
-      })}
+                    {/* Content */}
+                    <div className="absolute bottom-0 left-0 right-0 p-8 z-20">
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                        className="max-w-3xl"
+                      >
+                        <h3 className="text-3xl font-bold text-white mb-4">
+                          {img.title}
+                        </h3>
+                        <p className="text-gray-300 text-lg">
+                          {img.description}
+                        </p>
+                      </motion.div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+
+          {/* Navigation Arrows */}
+          <div className="absolute inset-0 flex items-center justify-between p-4">
+            <button
+              onClick={() => skipToImage(Math.max(0, imgIndex - 1))}
+              className="p-2 rounded-full bg-gray-900/50 text-white backdrop-blur-sm transition-all hover:bg-gray-900/75"
+              disabled={imgIndex === 0}
+            >
+              <FiChevronLeft className="w-6 h-6" />
+            </button>
+            <button
+              onClick={() =>
+                skipToImage(Math.min(imgs.length - 1, imgIndex + 1))
+              }
+              className="p-2 rounded-full bg-gray-900/50 text-white backdrop-blur-sm transition-all hover:bg-gray-900/75"
+              disabled={imgIndex === imgs.length - 1}
+            >
+              <FiChevronRight className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+
+        {/* Dots Navigation */}
+        <div className="flex justify-center gap-3 mt-8">
+          {imgs.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => skipToImage(idx)}
+              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                idx === imgIndex
+                  ? "bg-blue-500 w-8"
+                  : "bg-gray-500 hover:bg-gray-400"
+              }`}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
+          ))}
+        </div>
+      </div>
     </div>
-  );
-};
-
-const GradientEdges = () => {
-  return (
-    <>
-      <div className="pointer-events-none absolute bottom-0 left-0 top-0 w-[10vw] max-w-[100px] bg-gradient-to-r from-neutral-950/50 to-neutral-950/0" />
-      <div className="pointer-events-none absolute bottom-0 right-0 top-0 w-[10vw] max-w-[100px] bg-gradient-to-l from-neutral-950/50 to-neutral-950/0" />
-    </>
   );
 };

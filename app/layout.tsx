@@ -17,9 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Navbar mode="light" />
       <body className={inter.className}>
-        <main className="relative overflow-hidden">{children}</main>
+        <Navbar />
+        <main className="overflow-hidden relative">{children}</main>
       </body>
     </html>
   );
