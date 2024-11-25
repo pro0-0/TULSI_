@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { FiAward, FiUsers, FiCheckCircle, FiTarget } from "react-icons/fi";
+import Image from "next/image";
 
 const Aboutus: React.FC = () => {
   const ref = useRef(null);
@@ -70,10 +71,11 @@ const Aboutus: React.FC = () => {
                 }
                 transition={{ duration: 0.7 }}
               >
-                <img
-                  className="w-full h-auto object-cover rounded-2xl shadow-lg transform hover:scale-105 transition-transform duration-500"
+                <Image
                   src="/buliding.png"
                   alt="Building"
+                  width={500}
+                  height={300}
                 />
               </motion.div>
 

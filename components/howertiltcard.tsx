@@ -7,6 +7,7 @@ import {
   useSpring,
 } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 const Example = ({ title, img }: { title: string; img: string }) => {
   return (
@@ -81,10 +82,12 @@ const TiltCard = ({ title, img }: { title: string; img: string }) => {
           <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-60 z-10" />
 
           {/* Image */}
-          <img
+          <Image
             src={img}
             alt={title}
             className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+            width={500}
+            height={300}
           />
 
           {/* Content */}

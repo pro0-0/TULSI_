@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 
 export const InfiniteMovingCards = ({
   items,
@@ -22,7 +23,7 @@ export const InfiniteMovingCards = ({
 
   useEffect(() => {
     addAnimation();
-  }, []);
+  }, [addAnimation]);
 
   const [start, setStart] = useState(false);
 
@@ -84,9 +85,15 @@ export const InfiniteMovingCards = ({
           >
             <div className="flex flex-col items-center">
               <div className="h-16 w-16 rounded-full overflow-hidden mb-2">
-                <img
-                  src={item.imgSrc}
+                <Image
+                  src={
+                    item.imgSrc.startsWith("/")
+                      ? item.imgSrc
+                      : `/${item.imgSrc}`
+                  }
                   alt={item.companyName}
+                  width={64}
+                  height={64}
                   className="h-full w-full object-cover"
                 />
               </div>

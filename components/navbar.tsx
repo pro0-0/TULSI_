@@ -1,6 +1,7 @@
 "use client";
 import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = React.useState(false);
@@ -63,43 +64,40 @@ const Navbar = () => {
       className="fixed w-full z-[1000] transition-all duration-300"
     >
       {/* Main Navigation Container */}
-      <div className="relative mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative px-4 mx-auto sm:px-6 lg:px-8">
         {/* Background with enhanced visibility */}
         <div
           className={`absolute inset-0 transition-all duration-500 ${
             isScrolled
-              ? "bg-gray-900/95 shadow-xl"
+              ? "shadow-xl bg-gray-900/95"
               : "bg-gradient-to-b from-gray-900/95 to-gray-900/80"
           } backdrop-blur-xl border-b border-gray-800/50`}
         />
 
         {/* Navigation Content */}
-        <div className="relative flex items-center justify-between py-2">
+        <div className="flex relative justify-between items-center py-2">
           {/* Logo Section */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="flex-shrink-0 relative z-10"
+            className="relative z-10 flex-shrink-0"
           >
             <button
               onClick={scrollToTop}
-              className="focus:outline-none transform hover:scale-105 transition-transform duration-200"
+              className="transition-transform duration-200 transform focus:outline-none hover:scale-105"
             >
-              <img
-                src="logo.png"
+              <Image
+                src="/logo.png"
                 alt="Tulsi Industries"
-                className="h-24 w-auto object-contain"
-                style={{
-                  filter: "brightness(1.2) contrast(1.1)",
-                  mixBlendMode: "lighten",
-                }}
+                width={50}
+                height={50}
               />
             </button>
           </motion.div>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden items-center space-x-1 md:flex">
             {[
               { label: "Highlights", id: "highlights" },
               { label: "About Us", id: "aboutus" },
@@ -122,18 +120,18 @@ const Navbar = () => {
                 {activeSection === item.id && (
                   <motion.div
                     layoutId="activeSection"
-                    className="absolute inset-0 bg-blue-900/20 rounded-lg"
+                    className="absolute inset-0 rounded-lg bg-blue-900/20"
                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                   />
                 )}
-                <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 bg-blue-900/20 transition-opacity duration-200" />
+                <div className="absolute inset-0 rounded-lg opacity-0 transition-opacity duration-200 group-hover:opacity-100 bg-blue-900/20" />
               </motion.button>
             ))}
 
             {/* Contact Button */}
             <motion.button
               onClick={() => scrollToSection("contact")}
-              className="ml-4 px-6 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+              className="px-6 py-2 ml-4 text-sm font-medium text-white bg-blue-600 rounded-lg transition-colors duration-200 hover:bg-blue-700"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -143,11 +141,11 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <motion.button
-            className="md:hidden relative z-10 p-2 rounded-lg bg-blue-600/20 hover:bg-blue-600/30 transition-colors"
+            className="relative z-10 p-2 rounded-lg transition-colors md:hidden bg-blue-600/20 hover:bg-blue-600/30"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             whileTap={{ scale: 0.95 }}
           >
-            <div className="w-6 h-6 flex flex-col justify-center items-center">
+            <div className="flex flex-col justify-center items-center w-6 h-6">
               <span
                 className={`block w-5 h-0.5 bg-white transition-all duration-300 ${
                   isMobileMenuOpen
@@ -179,9 +177,9 @@ const Navbar = () => {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden overflow-hidden"
+              className="overflow-hidden md:hidden"
             >
-              <div className="px-2 py-3 mt-2 space-y-1 bg-gray-900/95 backdrop-blur-xl rounded-xl border border-gray-800/50 shadow-lg">
+              <div className="px-2 py-3 mt-2 space-y-1 rounded-xl border shadow-lg backdrop-blur-xl bg-gray-900/95 border-gray-800/50">
                 {[
                   { label: "Highlights", id: "highlights" },
                   { label: "About Us", id: "aboutus" },
