@@ -1,102 +1,61 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { products } from "../data/products";
 
-const AluminumProductPage = () => {
+const ProductsPage = () => {
   return (
-    <div className="mt-32 text-gray-800 bg-white dark:bg-gray-900 dark:text-gray-100">
-      <div className="py-8">
-        <div className="px-4 mx-auto max-w-6xl sm:px-6 lg:px-8">
-          <div className="flex flex-col -mx-4 md:flex-row">
-            {/* Image and Actions */}
-            <div className="px-4 md:flex-1">
-              <div className="relative h-[460px] rounded-lg bg-gray-200 mb-4 overflow-hidden shadow-lg">
-                <Image
-                  src="/allu.jpg"
-                  alt="Aluminum Product"
-                  width={500}
-                  height={300}
-                />
-              </div>
-              <div className="flex -mx-2 mb-4">
-                <div className="px-2 w-1/2">
-                  <button className="px-4 py-2 w-full font-semibold text-white bg-blue-600 rounded-full transition duration-300 hover:bg-blue-700">
-                    Request a Quote
-                  </button>
-                </div>
-                <div className="px-2 w-1/2">
-                  <button className="px-4 py-2 w-full font-semibold text-gray-800 bg-gray-300 rounded-full transition duration-300 hover:bg-gray-400">
-                    Contact Us
-                  </button>
-                </div>
-              </div>
-            </div>
+    <div className="mt-32 min-h-screen bg-white dark:bg-gray-900">
+      <div className="px-4 py-12 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <h1 className="mb-8 text-4xl font-bold text-gray-900 dark:text-white">
+          Our Products
+        </h1>
 
-            {/* Product Details */}
-            <div className="px-4 md:flex-1">
-              <h2 className="mb-4 text-3xl font-bold text-gray-900">
-                Aluminum Product Name
-              </h2>
-              <p className="mb-6 text-base text-gray-700">
-                Our premium aluminum products offer exceptional strength and
-                durability. Designed for both residential and commercial
-                applications, they combine modern aesthetics with functionality.
-              </p>
-              <div className="flex mb-6">
-                <div className="mr-6">
-                  <span className="font-semibold text-gray-800">Price:</span>
-                  <span className="text-lg text-gray-600">$99.99</span>
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {products.map((product) => (
+            <Link
+              href={`/products/${product.id}`}
+              key={product.id}
+              className="group"
+            >
+              <div className="overflow-hidden bg-white rounded-lg shadow-lg transition-transform duration-300 dark:bg-gray-800 group-hover:scale-105">
+                <div className="relative h-64">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
-                <div>
-                  <span className="font-semibold text-gray-800">
-                    Availability:
-                  </span>
-                  <span className="text-lg text-gray-600">In Stock</span>
-                </div>
-              </div>
-              <div className="mb-6">
-                <span className="font-semibold text-gray-800">
-                  Select Finish:
-                </span>
-                <div className="flex items-center mt-2">
-                  <button
-                    className="mr-2 w-6 h-6 bg-gray-400 rounded-full border border-gray-300"
-                    aria-label="Brushed Aluminum"
-                  ></button>
-                  <button
-                    className="mr-2 w-6 h-6 rounded-full border border-gray-300 bg-silver-500"
-                    aria-label="Silver"
-                  ></button>
-                  <button
-                    className="mr-2 w-6 h-6 bg-gray-900 rounded-full border border-gray-300"
-                    aria-label="Matte Black"
-                  ></button>
-                  <button
-                    className="mr-2 w-6 h-6 rounded-full border border-gray-300 bg-gold-500"
-                    aria-label="Gold"
-                  ></button>
-                </div>
-
-                <div>
-                  <span className="font-semibold text-gray-800">
-                    Product Description:
-                  </span>
-                  <p className="mt-2 text-base text-gray-700">
-                    Our aluminum product is crafted to meet the highest
-                    standards of quality and performance. It is ideal for
-                    various applications, offering a sleek and modern look. With
-                    a range of finishes and sizes, it can be tailored to suit
-                    your specific needs. Whether for architectural, industrial,
-                    or decorative purposes, this product delivers reliability
-                    and aesthetic appeal.
+                <div className="p-6">
+                  <h2 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
+                    {product.name}
+                  </h2>
+                  <p className="mb-4 text-gray-600 dark:text-gray-300">
+                    {product.description}
                   </p>
+                  <div className="flex justify-between items-center">
+                    <span className="text-blue-600 dark:text-blue-400">
+                      {product.price}
+                    </span>
+                    <span
+                      className={`px-3 py-1 rounded-full text-sm ${
+                        product.availability === "In Stock"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-red-100 text-red-800"
+                      }`}
+                    >
+                      {product.availability}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </Link>
+          ))}
         </div>
       </div>
     </div>
   );
 };
 
-export default AluminumProductPage;
+export default ProductsPage;

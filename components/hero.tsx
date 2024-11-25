@@ -117,7 +117,7 @@ const Hero = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
                 >
-                  <h2 className="text-3xl font-bold text-white">124K+</h2>
+                  <h2 className="text-3xl font-bold text-white">500+</h2>
                   <p className="text-blue-400">Projects</p>
                 </motion.div>
                 <motion.div
@@ -125,7 +125,7 @@ const Hero = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
                 >
-                  <h2 className="text-3xl font-bold text-white">126</h2>
+                  <h2 className="text-3xl font-bold text-white">50+</h2>
                   <p className="text-blue-400">Clients</p>
                 </motion.div>
                 <motion.div
@@ -133,7 +133,7 @@ const Hero = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.4 }}
                 >
-                  <h2 className="text-3xl font-bold text-white">78K</h2>
+                  <h2 className="text-3xl font-bold text-white">25+</h2>
                   <p className="text-blue-400">Products</p>
                 </motion.div>
               </div>
